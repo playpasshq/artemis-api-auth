@@ -1,15 +1,14 @@
-# Artemis::Api::Auth::Adapter
+# Artemis ApiAuth
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/artemis/api/auth/adapter`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This gem provides a new Adapter for the [Artemis](https://github.com/yuki24/artemis) GraphQL ruby client to support HMAC Authentication
+using [ApiAuth](https://github.com/mgomes/api_auth)
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'artemis-api-auth-adapter'
+gem 'artemis-api-auth'
 ```
 
 And then execute:
@@ -22,7 +21,35 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+After following the installation instruction of Artemis, update your `config/graphql.yml` to use the new `net_http_hmac` adapter
+
+```yaml
+default: &default
+  # The underlying client library that actually makes an HTTP request.
+  # Available adapters are :net_http, :net_http_persistent, :curb, and :test.
+  #
+  # It is set to :net_http by default.
+  adapter: :net_http_hmac
+```
+
+You can configure ApiAuth by setting the `default_context` in your Artemis client
+
+```ruby
+class Artsy < Artemis::Client
+  # Set the default context for HMAC authentication from the secrets
+  # This will be used in our Net HTTP HMAC adapter
+  # @see {Artemis::Adapters::NetHttpHmacAdapter}
+  self.default_context = {
+    api_auth: {
+      access_id: '1',
+      secret_key: 'very-secret-hmac-api-key',
+      # optional
+      digest: 'sha256', # default since more secure
+      override_http_method: 'POST' # default: nil
+    }
+  }
+end
+```
 
 ## Development
 

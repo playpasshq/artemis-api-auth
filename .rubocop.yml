@@ -1,0 +1,230 @@
+inherit_from: .rubocop_todo.yml
+require: rubocop-rspec
+
+# RSpec is a big DSL so ignore this in specs
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+
+# -----------------------------------------------------------------------------
+# Style / Layout
+# -----------------------------------------------------------------------------
+
+# All our files should be UTF-8
+Style/Encoding:
+  Enabled: true
+
+# Don't require the frozen string comment, later versions of ruby will do this by default
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Go for consitent instead of all the other wierd setups
+Layout/IndentHash:
+  EnforcedStyle: consistent
+
+Layout/IndentArray:
+  EnforcedStyle: consistent
+
+# Spacing it out is more work then just letting it be, so lets let it be
+Layout/AlignArray:
+  Enabled: false
+
+# We always want key style
+Layout/AlignHash:
+  EnforcedColonStyle: key
+  EnforcedHashRocketStyle: key
+  EnforcedLastArgumentHashStyle: always_ignore
+
+# We want to go for consitency and nothing fancy really, the style is quite simple
+# just indent with 2 tabs always. This means we have to disable all the rubocops
+#
+# @example
+#   method(has: 'value',
+#     key: 'value',
+#   )
+#
+Layout/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/MultilineMethodCallIndentation:
+  Enabled: false
+
+Layout/MultilineMethodCallBraceLayout:
+  Enabled: false
+
+Layout/MultilineHashBraceLayout:
+  Enabled: false
+
+Layout/MultilineArrayBraceLayout:
+  Enabled: false
+
+Layout/MultilineOperationIndentation:
+  Enabled: true
+  EnforcedStyle: indented
+
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+Layout/RescueEnsureAlignment:
+  Enabled: false
+
+####
+
+# Enforces if / else / end to always use 2 identations, even when assigned
+#
+# @example
+#   variable = if cookies
+#     'eat'
+#   else
+#     'cry'
+#   end
+#
+Layout/CaseIndentation:
+  Enabled: true
+  EnforcedStyle: end
+
+Layout/EndAlignment:
+  Enabled: true
+  EnforcedStyleAlignWith: variable
+
+# Only require braces when there might be possible confusion on what is a hsahs and what not
+Style/BracesAroundHashParameters:
+  Enabled: true
+  EnforcedStyle: context_dependent
+
+# We prefere alias_method
+# ref: http://blog.bigbinary.com/2012/01/08/alias-vs-alias-method.html
+Style/Alias:
+  Enabled: true
+  EnforcedStyle: prefer_alias_method
+
+# Prefere do..end when you have more then 2 lines in a block
+Style/BlockDelimiters:
+  Enabled: true
+  EnforcedStyle: line_count_based
+
+# With rails being very picky on eager loading we disable this,
+# I also see no benefit and it really depends on the readability of the code
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+# Don't bitch about documentation
+Style/Documentation:
+  Enabled: false
+
+# I do see it an anti pattern but ruby just misses a boolean class imoh
+Style/DoubleNegation:
+  Enabled: false
+
+# extend self != module_function, extend self has its useful cases
+Style/ModuleFunction:
+  Enabled: false
+
+# `inject` and `reduce` can make more sense and are more readable, shorter
+# to type, for this reason I don't like to enforce this at all.
+Style/EachWithObject:
+  Enabled: false
+
+# When you have an empty method we don't want it to become a oneliner with a ;
+# That looks ugly and just reminds me of PHP days I don't want to go to
+Style/EmptyMethod:
+  Enabled: true
+  EnforcedStyle: expanded
+
+# Don't care about how we formated strings
+Style/FormatString:
+  Enabled: false
+
+# We hate hash rockets, shoot to the moon
+Style/HashSyntax:
+  Enabled: true
+  EnforcedStyle: ruby19
+
+# Sometimes it is more readble and easier to understand, enforcing is a step to far
+Style/GuardClause:
+  Enabled: false
+
+# We like the short lambda syntax
+Style/Lambda:
+  Enabled: true
+  EnforcedStyle: literal
+
+# I don't see an issue with having a multiline and if statement at the end
+Style/MultilineIfModifier:
+  Enabled: false
+
+# We prefere next instead of an if inside loops, exclude the 2 workers since they
+# rely on checking busy workers in sidekiq
+Style/Next:
+  Enabled: true
+
+# Those predicates are confusing, it takes longer to read a word then to pattern match
+Style/NumericPredicate:
+  Enabled: true
+  EnforcedStyle: comparison
+
+Style/ZeroLengthPredicate:
+  Enabled: false
+
+Naming/PredicateName:
+  Enabled: false
+
+# We don't care about regex printing
+Style/RegexpLiteral:
+  Enabled: false
+
+# Do not care about single or double quotes, thats just annoying
+Style/StringLiterals:
+  Enabled: false
+
+# No preference, can be handy or not but certainly dont nag about it
+Style/TrailingCommaInArguments:
+  Enabled: false
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
+
+# Don't care how we use variable names with numbers
+Naming/VariableNumber:
+  Enabled: false
+
+# Allow f as a name since its just a lot for forms
+Naming/UncommunicativeMethodParamName:
+  AllowedNames:
+    - _
+
+# Enforce different brackets when we allow interpolating
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: ()
+    '%i': '()'
+    '%I': '[]'
+    '%r': '{}'
+    '%w': '()'
+    '%W': '[]'
+
+# Enfirce a symbol array if you have more then 5 items in it
+Style/SymbolArray:
+  Enabled: true
+  MinSize: 5
+
+Style/WordArray:
+  Enabled: true
+  MinSize: 5
+
+# Do not place comments on the same line as certain keywords. (eg def / end)
+Style/CommentedKeyword:
+  Enabled: false
+
+Layout/EmptyLinesAroundArguments:
+  Enabled: false
+
+# Not using rails or fixtures so this can be ignored
+RSpec/BeforeAfterAll:
+  Enabled: false
+
+RSpec/MessageSpies:
+  Enabled: false
