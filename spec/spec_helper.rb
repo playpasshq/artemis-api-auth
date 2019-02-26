@@ -3,6 +3,13 @@ require 'artemis'
 require 'api-auth'
 require 'artemis/api_auth'
 
+if ENV['COVERALLS_REPO_TOKEN']
+  require 'simplecov'
+  SimpleCov.add_filter('spec')
+  require 'coveralls'
+  Coveralls.wear!
+end
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = '.rspec_status'

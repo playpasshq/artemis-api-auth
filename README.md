@@ -1,4 +1,6 @@
 # Artemis ApiAuth
+[![Build Status](https://travis-ci.org/JanStevens/artemis-api-auth.svg?branch=master)](https://travis-ci.org/JanStevens/artemis-api-auth)
+[![Coverage Status](https://coveralls.io/repos/github/JanStevens/artemis-api-auth/badge.svg?branch=master)](https://coveralls.io/github/JanStevens/artemis-api-auth?branch=master)
 
 This gem provides a new Adapter for the [Artemis](https://github.com/yuki24/artemis) GraphQL ruby client to support HMAC Authentication
 using [ApiAuth](https://github.com/mgomes/api_auth)
@@ -59,7 +61,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/artemis-api-auth-adapter.
+Bug reports and pull requests are welcome on GitHub at https://github.com/JanStevens/artemis-api-auth
 
 ## License
 

@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = 'Net::HTTP adapter that adds Api Auth authentication for Artemis GraphQL Client'
   spec.description = 'Net::HTTP adapter that adds Api Auth authentication for Artemis GraphQL Client'
-  spec.homepage = 'https://github.com/'
+  spec.homepage = 'https://github.com/JanStevens/artemis-api-auth'
   spec.license = 'MIT'
 
   # Specify which files should be added to the gem when it is released.
@@ -31,4 +31,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'rubocop-rspec'
+  spec.add_development_dependency 'coveralls'
 end
