@@ -10,7 +10,7 @@ using [ApiAuth](https://github.com/mgomes/api_auth)
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'artemis-api-auth'
+gem 'artemis-api_auth'
 ```
 
 And then execute:
