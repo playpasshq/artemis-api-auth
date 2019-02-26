@@ -1,14 +1,13 @@
 require 'bundler/setup'
 require 'artemis'
 require 'api-auth'
-require 'artemis/api_auth'
 
-if ENV['COVERALLS_REPO_TOKEN']
-  require 'simplecov'
-  SimpleCov.add_filter('spec')
-  require 'coveralls'
-  Coveralls.wear!
-end
+require 'simplecov'
+SimpleCov.add_filter('spec')
+require 'coveralls'
+Coveralls.wear!
+
+require 'artemis/api_auth'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
