@@ -37,7 +37,7 @@ RSpec.describe Artemis::Adapters::NetHttpHmacAdapter do
       begin
         TCPSocket.open('localhost', 8000)
         break
-      rescue Errno::ECONNREFUSED => _e
+      rescue Errno::ECONNREFUSED
         # Nothing
       end
     end
