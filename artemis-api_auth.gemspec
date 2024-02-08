@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'api-auth', '< 3'
-  spec.add_dependency 'artemis', '< 1'
+  spec.add_dependency 'artemis', '< 2'
 
   spec.add_development_dependency 'bundler', '~> 1.17'
   spec.add_development_dependency 'coveralls'
