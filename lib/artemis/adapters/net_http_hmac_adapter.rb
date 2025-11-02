@@ -36,7 +36,8 @@ module Artemis
       def api_auth_sign_request!(request, api_auth)
         override_http_method = api_auth.fetch(:override_http_method, nil)
         digest = api_auth.fetch(:digest, 'sha256')
-        ::ApiAuth.sign!(request,
+        ::ApiAuth.sign!(
+          request,
           api_auth.fetch(:access_id), api_auth.fetch(:secret_key),
           override_http_method: override_http_method, digest: digest)
       end
