@@ -1,5 +1,9 @@
 inherit_from: .rubocop_todo.yml
-require: rubocop-rspec
+plugins: rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.2
+  NewCops: enable
 
 # RSpec is a big DSL so ignore this in specs
 Metrics/BlockLength:
@@ -19,18 +23,18 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 
 # Go for consitent instead of all the other wierd setups
-Layout/IndentHash:
+Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 
-Layout/IndentArray:
+Layout/FirstArrayElementIndentation:
   EnforcedStyle: consistent
 
 # Spacing it out is more work then just letting it be, so lets let it be
-Layout/AlignArray:
+Layout/ArrayAlignment:
   Enabled: false
 
 # We always want key style
-Layout/AlignHash:
+Layout/HashAlignment:
   EnforcedColonStyle: key
   EnforcedHashRocketStyle: key
   EnforcedLastArgumentHashStyle: always_ignore
@@ -43,7 +47,7 @@ Layout/AlignHash:
 #     key: 'value',
 #   )
 #
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
 
 Layout/MultilineMethodCallIndentation:
@@ -88,9 +92,9 @@ Layout/EndAlignment:
   EnforcedStyleAlignWith: variable
 
 # Only require braces when there might be possible confusion on what is a hsahs and what not
-Style/BracesAroundHashParameters:
-  Enabled: true
-  EnforcedStyle: context_dependent
+# Style/BracesAroundHashParameters:
+#   Enabled: true
+#   EnforcedStyle: context_dependent
 
 # We prefere alias_method
 # ref: http://blog.bigbinary.com/2012/01/08/alias-vs-alias-method.html
@@ -166,9 +170,6 @@ Style/NumericPredicate:
 Style/ZeroLengthPredicate:
   Enabled: false
 
-Naming/PredicateName:
-  Enabled: false
-
 # We don't care about regex printing
 Style/RegexpLiteral:
   Enabled: false
@@ -192,7 +193,7 @@ Naming/VariableNumber:
   Enabled: false
 
 # Allow f as a name since its just a lot for forms
-Naming/UncommunicativeMethodParamName:
+Naming/MethodParameterName:
   AllowedNames:
     - _
 

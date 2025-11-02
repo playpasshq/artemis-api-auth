@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = 'Net::HTTP adapter that adds Api Auth authentication for Artemis GraphQL Client'
   spec.description = 'Net::HTTP adapter that adds Api Auth authentication for Artemis GraphQL Client'
-  spec.homepage = 'https://github.com/JanStevens/artemis-api-auth'
+  spec.homepage = 'https://github.com/playpasshq/artemis-api-auth'
   spec.license = 'MIT'
 
   # Specify which files should be added to the gem when it is released.
@@ -23,13 +23,10 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'api-auth', '< 3'
-  spec.add_dependency 'artemis', '< 1'
+  spec.add_dependency 'artemis', '< 2'
 
-  spec.add_development_dependency 'bundler', '~> 1.17'
-  spec.add_development_dependency 'coveralls'
-  spec.add_development_dependency 'rack'
-  spec.add_development_dependency 'rake', '~> 12.0'
-  spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rubocop'
-  spec.add_development_dependency 'rubocop-rspec'
+  spec.required_ruby_version = '>= 3.2.0'
+  spec.metadata['allowed_push_host'] = 'https://rubygems.pkg.github.com/playpasshq'
+  spec.metadata['rubygems_mfa_required'] = 'true'
+  spec.metadata['github_repo'] = 'ssh://github.com/playpasshq/artemis-api-auth'
 end

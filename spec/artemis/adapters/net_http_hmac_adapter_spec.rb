@@ -1,50 +1,46 @@
 require 'json'
-require 'rack'
+require 'rackup'
+
+FakeServer = ->(env) {
+  case env['PATH_INFO']
+  when '/slow_server'
+    sleep 1.1
+
+    [200, {}, ['{}']]
+  when '/500'
+    [500, {}, ['Server error']]
+  else
+    body = {
+      data: {
+        body: JSON.parse(env['rack.input'].read),
+        headers: env.select { |key, _val| key.start_with?('HTTP_') }
+                    .to_h { |key, val| [key.gsub(/^HTTP_/, ''), val.downcase] }
+      },
+      errors: [],
+      extensions: {}
+    }.to_json
+
+    [200, {}, [body]]
+  end
+}
 
 RSpec.describe Artemis::Adapters::NetHttpHmacAdapter do
-  FakeServer = ->(env) {
-    case env['PATH_INFO']
-    when '/slow_server'
-      sleep 1.1
-
-      [200, {}, ['{}']]
-    when '/500'
-      [500, {}, ['Server error']]
-    else
-      body = {
-        data: {
-          body: JSON.parse(env['rack.input'].read),
-          headers: env.select { |key, _val| key.start_with?('HTTP_') }
-                      .collect { |key, val| [key.gsub(/^HTTP_/, ''), val.downcase] }
-                      .to_h
-        },
-        errors: [],
-        extensions: {}
-      }.to_json
-
-      [200, {}, [body]]
-    end
-  }
-
   before :all do
     Artemis::Adapters::AbstractAdapter.send(:attr_writer, :uri, :timeout)
 
     @server_thread = Thread.new do
-      Rack::Handler::WEBrick.run(FakeServer, Port: 8000, Logger: WEBrick::Log.new('/dev/null'), AccessLog: [])
+      Rackup::Server.start(app: FakeServer, Port: 8000, AccessLog: [])
     end
 
     loop do
-      begin
-        TCPSocket.open('localhost', 8000)
-        break
-      rescue Errno::ECONNREFUSED
-        # Nothing
-      end
+      TCPSocket.open('localhost', 8000)
+      break
+    rescue Errno::ECONNREFUSED
+      # Nothing
     end
   end
 
   after :all do
-    Rack::Handler::WEBrick.shutdown
     @server_thread.terminate
   end
 
@@ -82,12 +78,13 @@ RSpec.describe Artemis::Adapters::NetHttpHmacAdapter do
       expect(response['errors']).to eq([])
       expect(response['extensions']).to eq({})
 
-      expect(response['data']['headers']).to include('CONTENT_MD5', 'DATE', 'AUTHORIZATION')
+      expect(response['data']['headers']).to include('X_AUTHORIZATION_CONTENT_SHA256', 'DATE', 'AUTHORIZATION')
     end
 
     it 'calls ApiAuth' do
-      expect(::ApiAuth).to receive(:sign!).with(instance_of(Net::HTTP::Post),
-        1, 'cpc+uIj39Bl823sGAzfjx674gXOvsKI/k5knuzd3PIbtJ54X+muycE7eNE7Kex0H+De5coyB0jdvXva8uEtgsg==',
+      expect(ApiAuth).to receive(:sign!).with(
+        instance_of(Net::HTTP::Post), 1,
+        'cpc+uIj39Bl823sGAzfjx674gXOvsKI/k5knuzd3PIbtJ54X+muycE7eNE7Kex0H+De5coyB0jdvXva8uEtgsg==',
         override_http_method: nil, digest: 'sha256').and_call_original
       post_request
     end

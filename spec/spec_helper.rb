@@ -1,11 +1,13 @@
 require 'bundler/setup'
+require 'artemis/rspec'
+require 'active_support/deprecator'
+require "active_support/deprecation"
 require 'artemis'
+
 require 'api-auth'
 
 require 'simplecov'
 SimpleCov.add_filter('spec')
-require 'coveralls'
-Coveralls.wear!
 
 require 'artemis/api_auth'
 
