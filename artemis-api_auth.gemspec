@@ -25,11 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'api-auth', '< 3'
   spec.add_dependency 'artemis', '< 2'
 
-  spec.add_development_dependency 'bundler', '~> 1.17'
-  spec.add_development_dependency 'coveralls'
-  spec.add_development_dependency 'rack'
-  spec.add_development_dependency 'rake', '~> 12.0'
-  spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rubocop'
-  spec.add_development_dependency 'rubocop-rspec'
+  spec.metadata['rubygems_mfa_required'] = 'true'
+  spec.required_ruby_version = '>= 3.2.0'
 end

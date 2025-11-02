@@ -7,17 +7,17 @@
 # versions of RuboCop, may require this file to be generated again.
 
 # Offense count: 1
-Lint/HandleExceptions:
+Lint/SuppressedException:
   Exclude:
     - 'spec/artemis/adapters/net_http_hmac_adapter_spec.rb'
 
 # Offense count: 1
 Metrics/AbcSize:
-  Max: 33
+  Max: 40
 
 # Offense count: 1
 Metrics/CyclomaticComplexity:
-  Max: 7
+  Max: 8
 
 # Offense count: 1
 # Configuration parameters: CountComments, ExcludedMethods.
@@ -44,5 +44,5 @@ RSpec/MultipleExpectations:
 # Offense count: 17
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
 # URISchemes: http, https
-Metrics/LineLength:
+Layout/LineLength:
   Max: 123
