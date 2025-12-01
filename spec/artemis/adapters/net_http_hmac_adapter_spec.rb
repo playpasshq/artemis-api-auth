@@ -81,6 +81,29 @@ RSpec.describe Artemis::Adapters::NetHttpHmacAdapter do
       expect(response['data']['headers']).to include('X_AUTHORIZATION_CONTENT_SHA256', 'DATE', 'AUTHORIZATION')
     end
 
+    context 'with md5 support' do
+      subject(:post_request) do
+        adapter.execute(
+          document: GraphQL::Client::IntrospectionDocument,
+          operation_name: 'IntrospectionQuery',
+          variables: { id: 'graphql-variable' },
+          context: {
+            api_auth: {
+              access_id: 1,
+              secret_key: 'cpc+uIj39Bl823sGAzfjx674gXOvsKI/k5knuzd3PIbtJ54X+muycE7eNE7Kex0H+De5coyB0jdvXva8uEtgsg==',
+              digest: 'sha256',
+              add_content_md5: true
+            }
+          }
+        )
+      end
+
+      it 'sets the content_md5 header' do
+        response = post_request
+        expect(response['data']['headers']).to include('CONTENT_MD5')
+      end
+    end
+
     it 'calls ApiAuth' do
       expect(ApiAuth).to receive(:sign!).with(
         instance_of(Net::HTTP::Post), 1,
