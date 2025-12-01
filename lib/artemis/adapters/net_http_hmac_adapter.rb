@@ -35,6 +35,11 @@ module Artemis
 
       def api_auth_sign_request!(request, api_auth)
         override_http_method = api_auth.fetch(:override_http_method, nil)
+
+        if api_auth.fetch(:add_content_md5, false)
+          request.headers['Content-MD5'] = Digest::MD5.base64digest(request.body)
+        end
+
         digest = api_auth.fetch(:digest, 'sha256')
         ::ApiAuth.sign!(
           request,
