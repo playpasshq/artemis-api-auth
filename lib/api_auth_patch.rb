@@ -7,22 +7,25 @@ module ApiAuthPatch
       body = @request.body
     end
 
-    if content_md5_fallback?
-      md5_base64digest(body || '')
-    else
-      sha256_base64digest(body || '')
-    end
+    content_md5_fallback? ? md5_base64digest(body || '') : sha256_base64digest(body || '')
   end
 
   def populate_content_hash
     return unless @request.class::REQUEST_HAS_BODY
 
     header_name = content_md5_fallback? ? 'Content-MD5' : 'X-Authorization-Content-SHA256'
+
     @request[header_name] = calculated_hash
   end
 
+  def content_hash
+    header_name = content_md5_fallback? ? %w(Content-MD5) : %w(X-Authorization-Content-SHA256)
+
+    find_header(header_name)
+  end
+
   def content_md5_fallback?
-    @request['Content-MD5'] == 'true'
+    @request['use-md5'] == 'true'
   end
 end
 ApiAuth::RequestDrivers::NetHttpRequest.prepend(ApiAuthPatch)

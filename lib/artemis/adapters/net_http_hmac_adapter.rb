@@ -34,7 +34,7 @@ module Artemis
       private
 
       def api_auth_sign_request!(request, api_auth)
-        request['Content-MD5'] = api_auth.fetch(:add_content_md5, false)
+        request['use-md5'] = api_auth.fetch(:add_content_md5, false)
 
         ::ApiAuth.sign!(request, api_auth.fetch(:access_id), api_auth.fetch(:secret_key),
                         override_http_method: api_auth.fetch(:override_http_method, nil),
