@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'api-auth', '< 3'
+  spec.add_dependency 'api-auth', '>= 2.6.0', '< 3'
   spec.add_dependency 'artemis', '< 2'
 
   spec.required_ruby_version = '>= 3.2.0'

@@ -101,6 +101,7 @@ RSpec.describe Artemis::Adapters::NetHttpHmacAdapter do
       it 'sets the content_md5 header' do
         response = post_request
         expect(response['data']['headers']).to include('CONTENT_MD5')
+        expect(response['data']['headers']['CONTENT_MD5']).not_to eq('true')
       end
     end
 
